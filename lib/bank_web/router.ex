@@ -29,6 +29,8 @@ defmodule BankWeb.Router do
     post "/leads", LeadController, :create
     get "/leads/thanks", LeadController, :thanks
 
+    get "/accounts/:id", AccountController, :create
+
   end
 
   scope "/", BankWeb do
