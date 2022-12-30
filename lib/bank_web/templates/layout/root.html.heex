@@ -19,6 +19,7 @@
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
           </ul>
+          <%= render "_employee_menu.html", assigns %>
         </nav>
         <a href="/" class="phx-logo">
           <img src={Routes.static_path(@conn, "/images/logo.jpg")} alt="Bank CI7250" do

@@ -35,4 +35,30 @@ defmodule BankWeb.ConnCase do
     Bank.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  @doc """
+  Setup helper that registers and logs in employees.
+
+      setup :register_and_log_in_employee
+
+  It stores an updated connection and a registered employee in the
+  test context.
+  """
+  def register_and_log_in_employee(%{conn: conn}) do
+    employee = Bank.AdminFixtures.employee_fixture()
+    %{conn: log_in_employee(conn, employee), employee: employee}
+  end
+
+  @doc """
+  Logs the given `employee` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def log_in_employee(conn, employee) do
+    token = Bank.Admin.generate_employee_session_token(employee)
+
+    conn
+    |> Phoenix.ConnTest.init_test_session(%{})
+    |> Plug.Conn.put_session(:employee_token, token)
+  end
 end
