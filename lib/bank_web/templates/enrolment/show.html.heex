@@ -1,0 +1,43 @@
+<h1>Show Enrolment</h1>
+
+<ul>
+
+  <li>
+    <strong>Fname:</strong>
+    <%= @enrolment.fname %>
+  </li>
+
+  <li>
+    <strong>Mname:</strong>
+    <%= @enrolment.mname %>
+  </li>
+
+  <li>
+    <strong>Lname:</strong>
+    <%= @enrolment.lname %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @enrolment.address %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @enrolment.email %>
+  </li>
+
+  <li>
+    <strong>Phone:</strong>
+    <%= @enrolment.phone %>
+  </li>
+
+  <li>
+    <strong>Branch:</strong>
+    <%= @enrolment.branch %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.enrolment_path(@conn, :edit, @enrolment) %></span> |
+<span><%= link "Back", to: Routes.enrolment_path(@conn, :index) %></span>

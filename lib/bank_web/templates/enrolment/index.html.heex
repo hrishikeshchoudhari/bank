@@ -1,0 +1,38 @@
+<h1>Listing Enrolments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fname</th>
+      <th>Mname</th>
+      <th>Lname</th>
+      <th>Address</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Branch</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for enrolment <- @enrolments do %>
+    <tr>
+      <td><%= enrolment.fname %></td>
+      <td><%= enrolment.mname %></td>
+      <td><%= enrolment.lname %></td>
+      <td><%= enrolment.address %></td>
+      <td><%= enrolment.email %></td>
+      <td><%= enrolment.phone %></td>
+      <td><%= enrolment.branch %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.enrolment_path(@conn, :show, enrolment) %></span>
+        <span><%= link "Edit", to: Routes.enrolment_path(@conn, :edit, enrolment) %></span>
+        <span><%= link "Delete", to: Routes.enrolment_path(@conn, :delete, enrolment), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Enrolment", to: Routes.enrolment_path(@conn, :new) %></span>
