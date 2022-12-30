@@ -4,6 +4,11 @@ defmodule BankWeb.LeadController do
   alias Bank.Marketing
   alias Bank.Marketing.Lead
 
+  def index(conn, _params) do
+    leads = Marketing.list_leads()
+    render(conn, "index.html", leads: leads)
+  end
+
   def new(conn, _params) do
     changeset = Marketing.change_lead(%Lead{})
     render(conn, "new.html", changeset: changeset)

@@ -1,0 +1,26 @@
+<h1>Listing Leads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Secret</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for lead <- @leads do %>
+    <tr>
+      <td><%= lead.name %></td>
+      <td><%= lead.age %></td>
+      <td><%= lead.secret %></td>
+
+      <td>
+        Create Account
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

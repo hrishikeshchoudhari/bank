@@ -103,6 +103,10 @@ defmodule Bank.Marketing do
     Enrolment.changeset(enrolment, attrs)
   end
 
+  def list_leads do
+    Repo.all(Lead)
+  end
+
   def change_lead(%Lead{} = lead, attrs \\ %{}) do
     Lead.changeset(lead, attrs)
   end

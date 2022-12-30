@@ -28,7 +28,17 @@ defmodule BankWeb.Router do
     get "/leads/new", LeadController, :new
     post "/leads", LeadController, :create
     get "/leads/thanks", LeadController, :thanks
+
   end
+
+  scope "/", BankWeb do
+    pipe_through [:browser, :require_authenticated_employee]
+
+    get "/leads", LeadController, :index
+
+
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", BankWeb do
