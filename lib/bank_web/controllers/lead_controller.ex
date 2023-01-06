@@ -16,7 +16,7 @@ defmodule BankWeb.LeadController do
 
   def create(conn, %{"lead" => lead_params}) do
     case Marketing.create_lead(lead_params) do
-      {:ok, lead} ->
+      {:ok, _lead} ->
         conn
         |> put_flash(:info, "Lead created successfully.")
         |> redirect(to: Routes.lead_path(conn, :thanks))

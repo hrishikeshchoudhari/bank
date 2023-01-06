@@ -4,23 +4,20 @@ defmodule BankWeb.AccountController do
   alias Bank.CoreBanking
   alias Bank.CoreBanking.Account
 
-  # def index(conn, _params) do
-  #   leads = Marketing.list_leads()
-  #   render(conn, "index.html", leads: leads)
-  # end
-
-  # def new(conn, _params) do
-  #   changeset = Marketing.change_lead(%Lead{})
-  #   render(conn, "new.html", changeset: changeset)
-  # end
-
   def create(conn, %{"id" => lead_id}) do
-    IO.inspect(lead_id)
-    render(conn, "index.html", lead_id: lead_id)
+    lead2acc = CoreBanking.get_lead!(lead_id)
+    render(conn, "show.html", lead2acc: lead2acc)
   end
 
-  # def thanks(conn, _params) do
-  #   render(conn, :thanks)
-  # end
+  def gen_acc_num(conn, %{"name" => acc_id}) do
+    case CoreBanking.create_account(acc_id) do
+      {:ok, acc} ->
+        conn
+        |> render("index.html", acc: acc)
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
+  end
 
 end
