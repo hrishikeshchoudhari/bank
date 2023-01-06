@@ -18,7 +18,7 @@
       <td><%= lead.secret %></td>
 
       <td>
-        Create Account
+        <span><%= link "Create Account", to: Routes.account_path(@conn, :create, lead) %></span>
       </td>
     </tr>
 <% end %>

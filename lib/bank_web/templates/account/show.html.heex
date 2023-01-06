@@ -1,0 +1,31 @@
+<h1>Create account from lead</h1>
+<%
+prm = %{
+  name: @lead2acc.name
+}
+%>
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @lead2acc.name %>
+  </li>
+
+  <li>
+    <strong>Age:</strong>
+    <%= @lead2acc.age %>
+  </li>
+
+  <li>
+    <strong>Secret:</strong>
+    <%= @lead2acc.secret %>
+  </li>
+
+  <li>
+    <strong>Account Number:</strong>
+    <span>- - - - - - - - - - - - - - - -</span>
+  </li>
+
+</ul>
+
+<h2><%= link "Create Account", to: Routes.account_path(@conn, :gen_acc_num, @lead2acc.name) %></h2>

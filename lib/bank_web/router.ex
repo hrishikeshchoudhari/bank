@@ -1,4 +1,5 @@
 defmodule BankWeb.Router do
+  # alias BankWeb.AccountController
   # alias BankWeb.LeadController
   # alias BankWeb.EnrolmentController
   use BankWeb, :router
@@ -29,6 +30,9 @@ defmodule BankWeb.Router do
     post "/leads", LeadController, :create
     get "/leads/thanks", LeadController, :thanks
 
+    get "/accounts/:id", AccountController, :create
+    get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
+
   end
 
   scope "/", BankWeb do
@@ -36,9 +40,7 @@ defmodule BankWeb.Router do
 
     get "/leads", LeadController, :index
 
-
   end
-
 
   # Other scopes may use custom stacks.
   # scope "/api", BankWeb do
