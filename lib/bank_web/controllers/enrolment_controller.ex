@@ -15,7 +15,6 @@ defmodule BankWeb.EnrolmentController do
   end
 
   def create(conn, %{"enrolment" => enrolment_params}) do
-    IO.inspect(enrolment_params)
     case Marketing.create_enrolment(enrolment_params) do
       {:ok, enrolment} ->
         conn
