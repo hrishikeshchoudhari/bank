@@ -61,4 +61,30 @@ defmodule BankWeb.ConnCase do
     |> Phoenix.ConnTest.init_test_session(%{})
     |> Plug.Conn.put_session(:employee_token, token)
   end
+
+  @doc """
+  Setup helper that registers and logs in customers.
+
+      setup :register_and_log_in_customer
+
+  It stores an updated connection and a registered customer in the
+  test context.
+  """
+  def register_and_log_in_customer(%{conn: conn}) do
+    customer = Bank.CoreBankingFixtures.customer_fixture()
+    %{conn: log_in_customer(conn, customer), customer: customer}
+  end
+
+  @doc """
+  Logs the given `customer` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def log_in_customer(conn, customer) do
+    token = Bank.CoreBanking.generate_customer_session_token(customer)
+
+    conn
+    |> Phoenix.ConnTest.init_test_session(%{})
+    |> Plug.Conn.put_session(:customer_token, token)
+  end
 end
