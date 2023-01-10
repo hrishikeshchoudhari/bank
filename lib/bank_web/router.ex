@@ -4,6 +4,8 @@ defmodule BankWeb.Router do
   # alias BankWeb.EnrolmentController
   use BankWeb, :router
 
+  import BankWeb.CustomerAuth
+
   import BankWeb.EmployeeAuth
 
   pipeline :browser do
@@ -13,6 +15,7 @@ defmodule BankWeb.Router do
     plug :put_root_layout, {BankWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_customer
     plug :fetch_current_employee
   end
 
@@ -108,5 +111,38 @@ defmodule BankWeb.Router do
     post "/employees/confirm", EmployeeConfirmationController, :create
     get "/employees/confirm/:token", EmployeeConfirmationController, :edit
     post "/employees/confirm/:token", EmployeeConfirmationController, :update
+  end
+
+  ## Authentication routes
+
+  scope "/", BankWeb do
+    pipe_through [:browser, :redirect_if_customer_is_authenticated]
+
+    get "/customers/register", CustomerRegistrationController, :new
+    post "/customers/register", CustomerRegistrationController, :create
+    get "/customers/log_in", CustomerSessionController, :new
+    post "/customers/log_in", CustomerSessionController, :create
+    get "/customers/reset_password", CustomerResetPasswordController, :new
+    post "/customers/reset_password", CustomerResetPasswordController, :create
+    get "/customers/reset_password/:token", CustomerResetPasswordController, :edit
+    put "/customers/reset_password/:token", CustomerResetPasswordController, :update
+  end
+
+  scope "/", BankWeb do
+    pipe_through [:browser, :require_authenticated_customer]
+
+    get "/customers/settings", CustomerSettingsController, :edit
+    put "/customers/settings", CustomerSettingsController, :update
+    get "/customers/settings/confirm_email/:token", CustomerSettingsController, :confirm_email
+  end
+
+  scope "/", BankWeb do
+    pipe_through [:browser]
+
+    delete "/customers/log_out", CustomerSessionController, :delete
+    get "/customers/confirm", CustomerConfirmationController, :new
+    post "/customers/confirm", CustomerConfirmationController, :create
+    get "/customers/confirm/:token", CustomerConfirmationController, :edit
+    post "/customers/confirm/:token", CustomerConfirmationController, :update
   end
 end

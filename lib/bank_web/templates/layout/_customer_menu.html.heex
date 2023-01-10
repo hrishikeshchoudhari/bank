@@ -1,0 +1,10 @@
+<ul>
+<%= if @current_customer do %>
+  <li><%= @current_customer.email %></li>
+  <li><%= link "Settings", to: Routes.customer_settings_path(@conn, :edit) %></li>
+  <li><%= link "Log out", to: Routes.customer_session_path(@conn, :delete), method: :delete %></li>
+<% else %>
+  <li><%= link "Register", to: Routes.customer_registration_path(@conn, :new) %></li>
+  <li><%= link "Log in", to: Routes.customer_session_path(@conn, :new) %></li>
+<% end %>
+</ul>
