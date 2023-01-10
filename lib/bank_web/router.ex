@@ -30,8 +30,7 @@ defmodule BankWeb.Router do
     post "/leads", LeadController, :create
     get "/leads/thanks", LeadController, :thanks
 
-    get "/accounts/:id", AccountController, :create
-    get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
+
 
   end
 
@@ -39,6 +38,8 @@ defmodule BankWeb.Router do
     pipe_through [:browser, :require_authenticated_employee]
 
     get "/leads", LeadController, :index
+    get "/accounts/:id", AccountController, :create
+    get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
 
   end
 
