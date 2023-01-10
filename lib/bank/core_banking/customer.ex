@@ -7,6 +7,7 @@ defmodule Bank.CoreBanking.Customer do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :name, :string
 
     timestamps()
   end
@@ -30,7 +31,7 @@ defmodule Bank.CoreBanking.Customer do
   """
   def registration_changeset(customer, attrs, opts \\ []) do
     customer
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :name])
     |> validate_email()
     |> validate_password(opts)
   end

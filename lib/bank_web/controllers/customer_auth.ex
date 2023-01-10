@@ -27,7 +27,7 @@ defmodule BankWeb.CustomerAuth do
   def log_in_customer(conn, customer, params \\ %{}) do
     token = CoreBanking.generate_customer_session_token(customer)
     customer_return_to = get_session(conn, :customer_return_to)
-
+    IO.inspect(customer)
     conn
     |> renew_session()
     |> put_session(:customer_token, token)
