@@ -20,4 +20,8 @@ defmodule BankWeb.AccountController do
     end
   end
 
+  def accounthome(conn, _name) do
+    render(conn, "home.html")
+  end
+
 end

@@ -17,6 +17,7 @@ defmodule Bank.CoreBanking.CustomerToken do
     field :token, :binary
     field :context, :string
     field :sent_to, :string
+    field :name, :string
     belongs_to :customer, Bank.CoreBanking.Customer
 
     timestamps(updated_at: false)
@@ -43,7 +44,7 @@ defmodule Bank.CoreBanking.CustomerToken do
   """
   def build_session_token(customer) do
     token = :crypto.strong_rand_bytes(@rand_size)
-    {token, %CustomerToken{token: token, context: "session", customer_id: customer.id}}
+    {token, %CustomerToken{token: token, context: "session", customer_id: customer.id, name: customer.name}}
   end
 
   @doc """

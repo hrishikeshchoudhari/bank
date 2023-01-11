@@ -3,6 +3,7 @@ defmodule BankWeb.CustomerAuth do
   import Phoenix.Controller
 
   alias Bank.CoreBanking
+  alias Bank.CoreBanking.Account
   alias BankWeb.Router.Helpers, as: Routes
 
   # Make the remember me cookie valid for 60 days.
@@ -27,13 +28,16 @@ defmodule BankWeb.CustomerAuth do
   def log_in_customer(conn, customer, params \\ %{}) do
     token = CoreBanking.generate_customer_session_token(customer)
     customer_return_to = get_session(conn, :customer_return_to)
-    IO.inspect(customer)
+    # Map.put(params, "name", customer.name)
+    conn = assign(conn, :name, customer.name)
+
     conn
     |> renew_session()
     |> put_session(:customer_token, token)
     |> put_session(:live_socket_id, "customers_sessions:#{Base.url_encode64(token)}")
     |> maybe_write_remember_me_cookie(token, params)
     |> redirect(to: customer_return_to || signed_in_path(conn))
+
   end
 
   defp maybe_write_remember_me_cookie(conn, token, %{"remember_me" => "true"}) do
@@ -92,6 +96,7 @@ defmodule BankWeb.CustomerAuth do
     {customer_token, conn} = ensure_customer_token(conn)
     customer = customer_token && CoreBanking.get_customer_by_session_token(customer_token)
     assign(conn, :current_customer, customer)
+    # assign(conn, :name, customer.name)
   end
 
   defp ensure_customer_token(conn) do
@@ -145,5 +150,12 @@ defmodule BankWeb.CustomerAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(_conn), do: "/"
+  defp signed_in_path(conn) do
+
+    IO.inspect(conn.assigns.name)
+    acc = CoreBanking.get_acc_by_name(conn.assigns.name)
+    IO.inspect(acc.acn)
+    # redirect(conn, to: Routes.account_path(conn, :accounthome, "me3@rishi.xyz"))
+    "/accounts/home/" <> acc.fname
+  end
 end

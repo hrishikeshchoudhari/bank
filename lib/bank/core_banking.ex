@@ -350,4 +350,28 @@ defmodule Bank.CoreBanking do
       {:error, :customer, changeset, _} -> {:error, changeset}
     end
   end
+
+
+  import Ecto.Query, warn: false
+  alias Bank.Repo
+
+  alias Bank.CoreBanking.Account
+  alias Bank.Marketing.Lead
+
+  def get_lead!(id) do
+    Repo.get!(Lead, id)
+  end
+
+  def create_account(name) do
+    acn = Integer.to_string(System.unique_integer([:positive]))
+    secret = Float.to_string(:rand.uniform())
+    new_acc = %{acn: acn, fname: name, balance: 1000, secret: secret}
+    %Account{}
+    |> Account.changeset(new_acc)
+    |> Repo.insert()
+  end
+
+  def get_acc_by_name(name) do
+    Repo.get_by!(Account, [fname: name])
+  end
 end

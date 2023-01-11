@@ -43,7 +43,12 @@ defmodule BankWeb.Router do
     get "/leads", LeadController, :index
     get "/accounts/:id", AccountController, :create
     get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
+  end
 
+  scope "/", BankWeb do
+    pipe_through [:browser, :require_authenticated_customer]
+
+    get "/accounts/home/:name", AccountController, :accounthome
   end
 
   # Other scopes may use custom stacks.
@@ -126,6 +131,7 @@ defmodule BankWeb.Router do
     post "/customers/reset_password", CustomerResetPasswordController, :create
     get "/customers/reset_password/:token", CustomerResetPasswordController, :edit
     put "/customers/reset_password/:token", CustomerResetPasswordController, :update
+
   end
 
   scope "/", BankWeb do
@@ -134,6 +140,8 @@ defmodule BankWeb.Router do
     get "/customers/settings", CustomerSettingsController, :edit
     put "/customers/settings", CustomerSettingsController, :update
     get "/customers/settings/confirm_email/:token", CustomerSettingsController, :confirm_email
+
+
   end
 
   scope "/", BankWeb do
@@ -144,5 +152,6 @@ defmodule BankWeb.Router do
     post "/customers/confirm", CustomerConfirmationController, :create
     get "/customers/confirm/:token", CustomerConfirmationController, :edit
     post "/customers/confirm/:token", CustomerConfirmationController, :update
+
   end
 end
