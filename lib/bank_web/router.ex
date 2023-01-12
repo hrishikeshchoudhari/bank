@@ -48,7 +48,7 @@ defmodule BankWeb.Router do
   scope "/", BankWeb do
     pipe_through [:browser, :require_authenticated_customer]
 
-    get "/accounts/home/:name", AccountController, :accounthome
+    get "/account/home", AccountController, :accounthome
   end
 
   # Other scopes may use custom stacks.

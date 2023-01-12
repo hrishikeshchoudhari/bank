@@ -156,6 +156,6 @@ defmodule BankWeb.CustomerAuth do
     acc = CoreBanking.get_acc_by_name(conn.assigns.name)
     IO.inspect(acc.acn)
     # redirect(conn, to: Routes.account_path(conn, :accounthome, "me3@rishi.xyz"))
-    "/accounts/home/" <> acc.fname
+    "/account/home"
   end
 end
