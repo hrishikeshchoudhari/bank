@@ -1,4 +1,5 @@
 defmodule BankWeb.Router do
+  # alias BankWeb.TransactionController
   # alias BankWeb.AccountController
   # alias BankWeb.LeadController
   # alias BankWeb.EnrolmentController
@@ -49,6 +50,8 @@ defmodule BankWeb.Router do
     pipe_through [:browser, :require_authenticated_customer]
 
     get "/account/home", AccountController, :accounthome
+
+    get "/transaction", TransactionController, :index
   end
 
   # Other scopes may use custom stacks.
