@@ -6,7 +6,8 @@ defmodule Bank.CoreBanking do
   import Ecto.Query, warn: false
   alias Bank.Repo
 
-  alias Bank.CoreBanking.{Customer, CustomerToken, CustomerNotifier}
+  alias Bank.Marketing.Lead
+  alias Bank.CoreBanking.{Account, Customer, CustomerNotifier, CustomerToken, Transaction}
 
   ## Database getters
 
@@ -352,11 +353,7 @@ defmodule Bank.CoreBanking do
   end
 
 
-  import Ecto.Query, warn: false
-  alias Bank.Repo
 
-  alias Bank.CoreBanking.Account
-  alias Bank.Marketing.Lead
 
   def get_lead!(id) do
     Repo.get!(Lead, id)
@@ -373,5 +370,11 @@ defmodule Bank.CoreBanking do
 
   def get_acc_by_name(name) do
     Repo.get_by!(Account, [fname: name])
+  end
+
+  def list_transaction_for_an_account(params) do
+    query = from t in "transactions",
+            where: t.src_acn == ^params.acn
+    Repo.all(query)
   end
 end
