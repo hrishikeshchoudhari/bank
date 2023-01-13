@@ -1,3 +1,28 @@
-<h1>Transaction Complete</h1>
+<h1>Transaction Successfully Completed!</h1>
+
+<ul>
+
+  <li>
+    <strong>From Account:</strong>
+    <%= @transaction.src_acn %>
+  </li>
+
+  <li>
+    <strong>To Account:</strong>
+    <%= @transaction.dst_acn %>
+  </li>
+
+  <li>
+    <strong>Amount:</strong>
+    <%= @transaction.amount %>
+  </li>
+
+  <li>
+    <strong>Mode of Transaction:</strong>
+    <%= @transaction.txn_mode %>
+  </li>
+
+</ul>
+
 
 <span><%= link "Back", to: Routes.transaction_path(@conn, :index) %></span>

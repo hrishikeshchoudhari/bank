@@ -372,9 +372,22 @@ defmodule Bank.CoreBanking do
     Repo.get_by!(Account, [fname: name])
   end
 
-  def list_transaction_for_an_account(params) do
-    query = from t in "transactions",
-            where: t.src_acn == ^params.acn
+  def get_account_statement(conn) do
+    acc = get_acc_by_name(conn.assigns.current_customer.name)
+    query = from t in Transaction,
+            where: t.src_acn == ^acc.acn
     Repo.all(query)
   end
+
+  def change_transaction(%Transaction{} = transaction, attrs \\ %{}) do
+    Transaction.changeset(transaction, attrs)
+  end
+
+  def create_transaction(attrs \\ %{}) do
+    %Transaction{}
+    |> Transaction.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def get_transaction!(id), do: Repo.get!(Transaction, id)
 end

@@ -6,7 +6,7 @@
   <% end %>
 
   <%= label f, :src_acn %>
-  <%= text_input f, :src_acn %>
+  <%= text_input f, :src_acn, [readonly: :true]%>
   <%= error_tag f, :src_acn %>
 
   <%= label f, :dst_acn %>
