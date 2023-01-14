@@ -4,6 +4,7 @@ defmodule Bank.CoreBanking do
   """
 
   import Ecto.Query, warn: false
+  alias Inspect.Bank.CoreBanking
   alias Bank.Repo
 
   alias Bank.Marketing.Lead
@@ -384,9 +385,32 @@ defmodule Bank.CoreBanking do
   end
 
   def create_transaction(attrs \\ %{}) do
-    %Transaction{}
-    |> Transaction.changeset(attrs)
-    |> Repo.insert()
+    # Ecto.Multi.new()
+    # |> Ecto.Multi.run(:src, fn (attrs) -> Repo.get_by!(Account, [acn: attrs["src_acn"]]) end )
+    # |> Ecto.Multi.insert(:txn, Transaction.changeset(%Transaction{}, attrs))
+    # |> Ecto.Multi.inspect()
+    # |> Repo.transaction()
+    src_acc = Repo.get_by!(Account, [acn: attrs["src_acn"]])
+    dst_acc = Repo.get_by!(Account, [acn: attrs["dst_acn"]])
+
+    new_src_balance = src_acc.balance - String.to_integer(attrs["amount"])
+    new_dst_balance = dst_acc.balance + String.to_integer(attrs["amount"])
+
+    if (new_src_balance) <= 0 do
+      {:error, "Balance too low for transaction"}
+    else
+      src_acc
+      |> Account.changeset(%{balance: new_src_balance})
+      |> Repo.update!()
+
+      dst_acc
+      |> Account.changeset(%{balance: new_dst_balance})
+      |> Repo.update!()
+
+      %Transaction{}
+      |> change_transaction(attrs)
+      |> Repo.insert()
+    end
   end
 
   def get_transaction!(id), do: Repo.get!(Transaction, id)
