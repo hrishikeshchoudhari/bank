@@ -25,7 +25,7 @@ defmodule BankWeb.TransactionController do
       {:ok, transaction} ->
         conn
         |> put_flash(:info, "Transaction created successfully.")
-        |> redirect(to: Routes.transaction_path(conn, :show, transaction))
+        |> redirect(to: Routes.transaction_path(conn, :show, transaction.txn))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
