@@ -17,7 +17,7 @@ defmodule BankWeb.AccountController do
         |> render("index.html", acc: acc)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "index.html", changeset: changeset)
     end
   end
 
@@ -25,19 +25,9 @@ defmodule BankWeb.AccountController do
     render(conn, "home.html")
   end
 
-  def statement(conn, _params) do
-    case CoreBanking.get_account_statement(conn) do
-      {:ok, stmt} ->
-        conn
-        |> render("statement.html", stmt: stmt)
-
-      [] ->
-        conn
-        |> render("empty.html")
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "statement.html", changeset: changeset)
-    end
+  def statement(conn, params) do
+    stmt = CoreBanking.get_account_statement(conn)
+    render(conn, "statement.html", stmt: stmt)
   end
 
 end

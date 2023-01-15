@@ -5,7 +5,7 @@ defmodule Bank.Marketing.Lead do
   schema "leads" do
     field :age, :integer
     field :name, :string
-    field :secret, :string
+    field :email, :string
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Bank.Marketing.Lead do
   @doc false
   def changeset(lead, attrs) do
     lead
-    |> cast(attrs, [:name, :age, :secret])
-    |> validate_required([:name, :age, :secret])
+    |> cast(attrs, [:name, :age, :email])
+    |> validate_required([:name, :age, :email])
   end
 end

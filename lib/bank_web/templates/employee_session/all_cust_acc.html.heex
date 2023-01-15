@@ -1,0 +1,8 @@
+<h1>All Customers and their Accounts</h1>
+
+<%= Enum.map @all, fn row -> %>
+        <%= rowl = Tuple.to_list(row) %>
+        <%= Enum.map rowl, fn cell -> %>
+    <p><%= cell %></p>
+    <%= end %>
+    <%= end%>

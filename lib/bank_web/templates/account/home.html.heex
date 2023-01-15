@@ -1,3 +1,4 @@
 <h1>Account Home</h1>
 
+<h2><%= link "View Statement", to: Routes.account_path(@conn, :statement) %></h2>
 <h2><%= link "Conduct Transaction", to: Routes.transaction_path(@conn, :new) %></h2>

@@ -366,8 +366,9 @@ defmodule Bank.CoreBanking do
 
   def create_account(name) do
     acn = Integer.to_string(System.unique_integer([:positive]))
+    # acn = Integer.to_string(Enum.random(1_000_000_000..9_000_000_000))
     secret = Float.to_string(:rand.uniform())
-    new_acc = %{acn: acn, fname: name, balance: 1000, secret: secret}
+    new_acc = %{acn: acn, fname: name, balance: 1000, email: secret}
     %Account{}
     |> Account.changeset(new_acc)
     |> Repo.insert()
@@ -382,6 +383,7 @@ defmodule Bank.CoreBanking do
     query = from t in Transaction,
             where: t.src_acn == ^acc.acn
     Repo.all(query)
+    |> IO.inspect()
   end
 
   def change_transaction(%Transaction{} = transaction, attrs \\ %{}) do
@@ -419,5 +421,18 @@ defmodule Bank.CoreBanking do
     # end
   end
 
+  def get_cust_acc(conn, params) do
+    query = from c in Customer, join: a in Account, on: a.fname == c.name, select: {c.name, c.email, a.acn, a.balance}
+    Repo.all(query)
+  end
+
   def get_transaction!(id), do: Repo.get!(Transaction, id)
 end
+
+
+# Enum.map(all, fn row ->
+#   rowl = Tuple.to_list(row)
+#   Enum.map(rowl, fn cell ->
+#     IO.inspect(cell)
+#   end)
+# end)

@@ -1,6 +1,7 @@
 defmodule BankWeb.EmployeeSessionController do
   use BankWeb, :controller
 
+  alias Bank.CoreBanking
   alias Bank.Admin
   alias BankWeb.EmployeeAuth
 
@@ -27,5 +28,10 @@ defmodule BankWeb.EmployeeSessionController do
 
   def admin(conn, params) do
     render(conn, "admin.html", params: params)
+  end
+
+  def get_cust_acc(conn, params) do
+    all = CoreBanking.get_cust_acc(conn, params)
+    render(conn, "all_cust_acc.html", all: all)
   end
 end

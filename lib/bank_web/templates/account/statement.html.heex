@@ -1,1 +1,27 @@
 <h1>Account Statement</h1>
+<%= if @stmt do%>
+<table>
+  <thead>
+    <tr>
+      <th>To Account</th>
+      <th>Amount</th>
+      <th>Time</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for txn <- @stmt do %>
+        <tr>
+        <td><%= txn.dst_acn %></td>
+        <td><%= txn.amount %></td>
+        <td><%= txn.inserted_at %></td>
+        </tr>
+    <% end %>
+    </tbody>
+    </table>
+<%= else %>
+Account has no transactions yet.
+<%= end %>
+
+
+<span><%= link "Account Home", to: Routes.account_path(@conn, :accounthome) %></span>

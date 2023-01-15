@@ -5,7 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Age</th>
-      <th>Secret</th>
+      <th>Email</th>
 
       <th></th>
     </tr>
@@ -15,7 +15,7 @@
     <tr>
       <td><%= lead.name %></td>
       <td><%= lead.age %></td>
-      <td><%= lead.secret %></td>
+      <td><%= lead.email %></td>
 
       <td>
         <span><%= link "View Application", to: Routes.account_path(@conn, :create, lead) %></span>

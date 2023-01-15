@@ -6,7 +6,7 @@ defmodule Bank.CoreBanking.Account do
     field :acn, :string
     field :balance, :integer
     field :fname, :string
-    field :secret, :string
+    field :email, :string
 
     timestamps()
   end
@@ -14,8 +14,8 @@ defmodule Bank.CoreBanking.Account do
   @doc false
   def changeset(account, attrs) do
     account
-    |> cast(attrs, [:acn, :fname, :balance, :secret])
-    |> validate_required([:acn, :fname, :balance, :secret])
+    |> cast(attrs, [:acn, :fname, :balance, :email])
+    |> validate_required([:acn, :fname, :balance, :email])
     |> unique_constraint(:acn)
   end
 end

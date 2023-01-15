@@ -1,4 +1,5 @@
 defmodule BankWeb.Router do
+  # alias BankWeb.EmployeeSessionController
   use BankWeb, :router
 
   import BankWeb.CustomerAuth
@@ -41,6 +42,7 @@ defmodule BankWeb.Router do
     get "/leads", LeadController, :index
     get "/accounts/:id", AccountController, :create
     get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
+    get "/admin/cust_acc", EmployeeSessionController, :get_cust_acc
   end
 
   scope "/", BankWeb do
