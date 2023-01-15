@@ -2,3 +2,5 @@
 <h1>Account for Mr. <%= @acc.fname %> is created!</h1>
 <h3>The new account number is <%= @acc.acn %></h3>
 <h3>The opening balance is £<%= @acc.balance %></h3>
+
+<p><%= link "View All Open Leads", to: Routes.lead_path(@conn, :index) %></p>

@@ -10,6 +10,7 @@ defmodule BankWeb.AccountController do
   end
 
   def gen_acc_num(conn, %{"name" => acc_id}) do
+    CoreBanking.delete_lead(acc_id)
     case CoreBanking.create_account(acc_id) do
       {:ok, acc} ->
         conn

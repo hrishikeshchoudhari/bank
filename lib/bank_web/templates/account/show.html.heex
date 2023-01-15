@@ -1,9 +1,5 @@
-<h1>Create account from lead</h1>
-<%
-prm = %{
-  name: @lead2acc.name
-}
-%>
+<h1>Account Application</h1>
+
 <ul>
 
   <li>
@@ -28,4 +24,4 @@ prm = %{
 
 </ul>
 
-<h2><%= link "Create Account", to: Routes.account_path(@conn, :gen_acc_num, @lead2acc.name) %></h2>
+<h2><%= link "Approve & Create Account", to: Routes.account_path(@conn, :gen_acc_num, @lead2acc.name) %></h2>

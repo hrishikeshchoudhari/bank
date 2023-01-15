@@ -360,6 +360,10 @@ defmodule Bank.CoreBanking do
     Repo.get!(Lead, id)
   end
 
+  def delete_lead(id) do
+    from(l in Lead, where: l.name == ^id) |> Repo.delete_all
+  end
+
   def create_account(name) do
     acn = Integer.to_string(System.unique_integer([:positive]))
     secret = Float.to_string(:rand.uniform())

@@ -24,4 +24,8 @@ defmodule BankWeb.EmployeeSessionController do
     |> put_flash(:info, "Logged out successfully.")
     |> EmployeeAuth.log_out_employee()
   end
+
+  def admin(conn, params) do
+    render(conn, "admin.html", params: params)
+  end
 end

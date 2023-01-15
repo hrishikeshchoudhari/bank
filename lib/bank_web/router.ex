@@ -1,10 +1,4 @@
 defmodule BankWeb.Router do
-  # alias BankWeb.AccountController
-  # alias Bank.CoreBanking.Account
-  # alias BankWeb.TransactionController
-  # alias BankWeb.AccountController
-  # alias BankWeb.LeadController
-  # alias BankWeb.EnrolmentController
   use BankWeb, :router
 
   import BankWeb.CustomerAuth
@@ -43,6 +37,7 @@ defmodule BankWeb.Router do
   scope "/", BankWeb do
     pipe_through [:browser, :require_authenticated_employee]
 
+    get "/admin", EmployeeSessionController, :admin
     get "/leads", LeadController, :index
     get "/accounts/:id", AccountController, :create
     get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
