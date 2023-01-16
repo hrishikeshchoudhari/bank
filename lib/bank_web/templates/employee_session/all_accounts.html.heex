@@ -1,0 +1,22 @@
+<h1>Listing All Accounts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Account Number</th>
+      <th>Current Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for account <- @accounts do %>
+    <tr>
+      <td><%= account.fname %></td>
+      <td><%= account.acn %></td>
+      <td><%= account.balance %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "Admin Home", to: "/admin" %></span>

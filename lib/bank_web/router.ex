@@ -43,6 +43,8 @@ defmodule BankWeb.Router do
     get "/accounts/:id", AccountController, :create
     get "/accounts/gen_acc_num/:name", AccountController, :gen_acc_num
     get "/admin/cust_acc", EmployeeSessionController, :get_cust_acc
+    get "/admin/all_customers", EmployeeSessionController, :get_all_customers
+    get "/admin/all_accounts", EmployeeSessionController, :get_all_accounts
   end
 
   scope "/", BankWeb do

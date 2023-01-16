@@ -2,6 +2,6 @@
 
 <h2><%= link "View All Open Leads", to: Routes.lead_path(@conn, :index) %></h2>
 
-<h2>View All Customers & Accounts</h2>
+<h2><%= link "View All Customers", to: Routes.employee_session_path(@conn, :get_all_customers) %></h2>
 
-<h2>View All Transactions</h2>
+<h2><%= link "View All Accounts", to: Routes.employee_session_path(@conn, :get_all_accounts) %></h2>

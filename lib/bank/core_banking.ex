@@ -353,9 +353,6 @@ defmodule Bank.CoreBanking do
     end
   end
 
-
-
-
   def get_lead!(id) do
     Repo.get!(Lead, id)
   end
@@ -365,8 +362,8 @@ defmodule Bank.CoreBanking do
   end
 
   def create_account(name) do
-    acn = Integer.to_string(System.unique_integer([:positive]))
-    # acn = Integer.to_string(Enum.random(1_000_000_000..9_000_000_000))
+    # acn = Integer.to_string(System.unique_integer([:positive]))
+    acn = Integer.to_string(Enum.random(1_000_000_000..9_000_000_000))
     secret = Float.to_string(:rand.uniform())
     new_acc = %{acn: acn, fname: name, balance: 1000, email: secret}
     %Account{}
@@ -383,7 +380,6 @@ defmodule Bank.CoreBanking do
     query = from t in Transaction,
             where: t.src_acn == ^acc.acn
     Repo.all(query)
-    |> IO.inspect()
   end
 
   def change_transaction(%Transaction{} = transaction, attrs \\ %{}) do
@@ -421,13 +417,23 @@ defmodule Bank.CoreBanking do
     # end
   end
 
-  def get_cust_acc(conn, params) do
+  def get_cust_acc(_conn, _params) do
     query = from c in Customer, join: a in Account, on: a.fname == c.name, select: {c.name, c.email, a.acn, a.balance}
     Repo.all(query)
   end
 
   def get_transaction!(id), do: Repo.get!(Transaction, id)
+
+  def get_all_customers(_conn, _params) do
+    Repo.all(Customer)
+  end
+
+  def get_all_accounts(_conn, _params) do
+    Repo.all(Account)
+  end
 end
+
+
 
 
 # Enum.map(all, fn row ->

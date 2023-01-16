@@ -34,4 +34,14 @@ defmodule BankWeb.EmployeeSessionController do
     all = CoreBanking.get_cust_acc(conn, params)
     render(conn, "all_cust_acc.html", all: all)
   end
+
+  def get_all_customers(conn, params) do
+    customers = CoreBanking.get_all_customers(conn, params)
+    render(conn, "all_customers.html", customers: customers)
+  end
+
+  def get_all_accounts(conn, params) do
+    accounts = CoreBanking.get_all_accounts(conn, params)
+    render(conn, "all_accounts.html", accounts: accounts)
+  end
 end
