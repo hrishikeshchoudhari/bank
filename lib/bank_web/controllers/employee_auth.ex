@@ -14,15 +14,6 @@ defmodule BankWeb.EmployeeAuth do
 
   @doc """
   Logs the employee in.
-
-  It renews the session ID and clears the whole session
-  to avoid fixation attacks. See the renew_session
-  function to customize this behaviour.
-
-  It also sets a `:live_socket_id` key in the session,
-  so LiveView sessions are identified and automatically
-  disconnected on log out. The line can be safely removed
-  if you are not using LiveView.
   """
   def log_in_employee(conn, employee, params \\ %{}) do
     token = Admin.generate_employee_session_token(employee)
@@ -48,16 +39,7 @@ defmodule BankWeb.EmployeeAuth do
   # session to avoid fixation attacks. If there is any data
   # in the session you may want to preserve after log in/log out,
   # you must explicitly fetch the session data before clearing
-  # and then immediately set it after clearing, for example:
-  #
-  #     defp renew_session(conn) do
-  #       preferred_locale = get_session(conn, :preferred_locale)
-  #
-  #       conn
-  #       |> configure_session(renew: true)
-  #       |> clear_session()
-  #       |> put_session(:preferred_locale, preferred_locale)
-  #     end
+  # and then immediately set it after clearing
   #
   defp renew_session(conn) do
     conn
@@ -67,8 +49,6 @@ defmodule BankWeb.EmployeeAuth do
 
   @doc """
   Logs the employee out.
-
-  It clears all session data for safety. See renew_session.
   """
   def log_out_employee(conn) do
     employee_token = get_session(conn, :employee_token)
@@ -123,9 +103,6 @@ defmodule BankWeb.EmployeeAuth do
 
   @doc """
   Used for routes that require the employee to be authenticated.
-
-  If you want to enforce the employee email is confirmed before
-  they use the application at all, here would be a good place.
   """
   def require_authenticated_employee(conn, _opts) do
     if conn.assigns[:current_employee] do

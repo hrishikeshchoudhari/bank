@@ -26,20 +26,24 @@ defmodule BankWeb.EmployeeSessionController do
     |> EmployeeAuth.log_out_employee()
   end
 
+  @spec admin(Plug.Conn.t(), any) :: Plug.Conn.t()
   def admin(conn, params) do
     render(conn, "admin.html", params: params)
   end
 
+  @spec get_cust_acc(Plug.Conn.t(), any) :: Plug.Conn.t()
   def get_cust_acc(conn, params) do
     all = CoreBanking.get_cust_acc(conn, params)
     render(conn, "all_cust_acc.html", all: all)
   end
 
+  @spec get_all_customers(Plug.Conn.t(), any) :: Plug.Conn.t()
   def get_all_customers(conn, params) do
     customers = CoreBanking.get_all_customers(conn, params)
     render(conn, "all_customers.html", customers: customers)
   end
 
+  @spec get_all_accounts(Plug.Conn.t(), any) :: Plug.Conn.t()
   def get_all_accounts(conn, params) do
     accounts = CoreBanking.get_all_accounts(conn, params)
     render(conn, "all_accounts.html", accounts: accounts)

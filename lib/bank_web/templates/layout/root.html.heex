@@ -15,9 +15,7 @@
         <nav>
           <ul>
             <li><a href="/leads/new">Request an Account</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
+
           </ul>
           <%= render "_employee_menu.html", assigns %>
           <%= render "_customer_menu.html", assigns %>
@@ -31,4 +29,5 @@
     </header>
     <%= @inner_content %>
   </body>
+
 </html>

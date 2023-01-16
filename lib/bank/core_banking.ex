@@ -14,15 +14,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Gets a customer by email.
-
-  ## Examples
-
-      iex> get_customer_by_email("foo@example.com")
-      %Customer{}
-
-      iex> get_customer_by_email("unknown@example.com")
-      nil
-
   """
   def get_customer_by_email(email) when is_binary(email) do
     Repo.get_by(Customer, email: email)
@@ -30,15 +21,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Gets a customer by email and password.
-
-  ## Examples
-
-      iex> get_customer_by_email_and_password("foo@example.com", "correct_password")
-      %Customer{}
-
-      iex> get_customer_by_email_and_password("foo@example.com", "invalid_password")
-      nil
-
   """
   def get_customer_by_email_and_password(email, password)
       when is_binary(email) and is_binary(password) do
@@ -48,17 +30,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Gets a single customer.
-
-  Raises `Ecto.NoResultsError` if the Customer does not exist.
-
-  ## Examples
-
-      iex> get_customer!(123)
-      %Customer{}
-
-      iex> get_customer!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_customer!(id), do: Repo.get!(Customer, id)
 
@@ -66,15 +37,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Registers a customer.
-
-  ## Examples
-
-      iex> register_customer(%{field: value})
-      {:ok, %Customer{}}
-
-      iex> register_customer(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def register_customer(attrs) do
     %Customer{}
@@ -84,12 +46,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking customer changes.
-
-  ## Examples
-
-      iex> change_customer_registration(customer)
-      %Ecto.Changeset{data: %Customer{}}
-
   """
   def change_customer_registration(%Customer{} = customer, attrs \\ %{}) do
     Customer.registration_changeset(customer, attrs, hash_password: false)
@@ -99,12 +55,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the customer email.
-
-  ## Examples
-
-      iex> change_customer_email(customer)
-      %Ecto.Changeset{data: %Customer{}}
-
   """
   def change_customer_email(customer, attrs \\ %{}) do
     Customer.email_changeset(customer, attrs)
@@ -113,15 +63,6 @@ defmodule Bank.CoreBanking do
   @doc """
   Emulates that the email will change without actually changing
   it in the database.
-
-  ## Examples
-
-      iex> apply_customer_email(customer, "valid password", %{email: ...})
-      {:ok, %Customer{}}
-
-      iex> apply_customer_email(customer, "invalid password", %{email: ...})
-      {:error, %Ecto.Changeset{}}
-
   """
   def apply_customer_email(customer, password, attrs) do
     customer
@@ -161,12 +102,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Delivers the update email instructions to the given customer.
-
-  ## Examples
-
-      iex> deliver_update_email_instructions(customer, current_email, &Routes.customer_update_email_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
   """
   def deliver_update_email_instructions(%Customer{} = customer, current_email, update_email_url_fun)
       when is_function(update_email_url_fun, 1) do
@@ -178,12 +113,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the customer password.
-
-  ## Examples
-
-      iex> change_customer_password(customer)
-      %Ecto.Changeset{data: %Customer{}}
-
   """
   def change_customer_password(customer, attrs \\ %{}) do
     Customer.password_changeset(customer, attrs, hash_password: false)
@@ -191,15 +120,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Updates the customer password.
-
-  ## Examples
-
-      iex> update_customer_password(customer, "valid password", %{password: ...})
-      {:ok, %Customer{}}
-
-      iex> update_customer_password(customer, "invalid password", %{password: ...})
-      {:error, %Ecto.Changeset{}}
-
   """
   def update_customer_password(customer, password, attrs) do
     changeset =
@@ -248,15 +168,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Delivers the confirmation email instructions to the given customer.
-
-  ## Examples
-
-      iex> deliver_customer_confirmation_instructions(customer, &Routes.customer_confirmation_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
-      iex> deliver_customer_confirmation_instructions(confirmed_customer, &Routes.customer_confirmation_url(conn, :edit, &1))
-      {:error, :already_confirmed}
-
   """
   def deliver_customer_confirmation_instructions(%Customer{} = customer, confirmation_url_fun)
       when is_function(confirmation_url_fun, 1) do
@@ -295,12 +206,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Delivers the reset password email to the given customer.
-
-  ## Examples
-
-      iex> deliver_customer_reset_password_instructions(customer, &Routes.customer_reset_password_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
   """
   def deliver_customer_reset_password_instructions(%Customer{} = customer, reset_password_url_fun)
       when is_function(reset_password_url_fun, 1) do
@@ -311,15 +216,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Gets the customer by reset password token.
-
-  ## Examples
-
-      iex> get_customer_by_reset_password_token("validtoken")
-      %Customer{}
-
-      iex> get_customer_by_reset_password_token("invalidtoken")
-      nil
-
   """
   def get_customer_by_reset_password_token(token) do
     with {:ok, query} <- CustomerToken.verify_email_token_query(token, "reset_password"),
@@ -332,15 +228,6 @@ defmodule Bank.CoreBanking do
 
   @doc """
   Resets the customer password.
-
-  ## Examples
-
-      iex> reset_customer_password(customer, %{password: "new long password", password_confirmation: "new long password"})
-      {:ok, %Customer{}}
-
-      iex> reset_customer_password(customer, %{password: "valid", password_confirmation: "not the same"})
-      {:error, %Ecto.Changeset{}}
-
   """
   def reset_customer_password(customer, attrs) do
     Ecto.Multi.new()
@@ -353,14 +240,17 @@ defmodule Bank.CoreBanking do
     end
   end
 
+  @spec get_lead!(any) :: any
   def get_lead!(id) do
     Repo.get!(Lead, id)
   end
 
+  @spec delete_lead(any) :: any
   def delete_lead(id) do
     from(l in Lead, where: l.name == ^id) |> Repo.delete_all
   end
 
+  @spec create_account(any) :: any
   def create_account(name) do
     # acn = Integer.to_string(System.unique_integer([:positive]))
     acn = Integer.to_string(Enum.random(1_000_000_000..9_000_000_000))
@@ -371,10 +261,23 @@ defmodule Bank.CoreBanking do
     |> Repo.insert()
   end
 
+  @spec get_acc_by_name(any) :: any
   def get_acc_by_name(name) do
     Repo.get_by!(Account, [fname: name])
   end
 
+  @spec get_account_statement(
+          atom
+          | %{
+              :assigns =>
+                atom
+                | %{
+                    :current_customer => atom | %{:name => any, optional(any) => any},
+                    optional(any) => any
+                  },
+              optional(any) => any
+            }
+        ) :: any
   def get_account_statement(conn) do
     acc = get_acc_by_name(conn.assigns.current_customer.name)
     query = from t in Transaction,
@@ -386,6 +289,8 @@ defmodule Bank.CoreBanking do
     Transaction.changeset(transaction, attrs)
   end
 
+  @spec create_transaction(%{optional(:__struct__) => none, optional(atom | binary) => any}) ::
+          any
   def create_transaction(attrs \\ %{}) do
 
     src_acc = Repo.get_by!(Account, [acn: attrs["src_acn"]])
@@ -400,45 +305,24 @@ defmodule Bank.CoreBanking do
     |> Ecto.Multi.update(:dst, Account.changeset(dst_acc, (%{balance: new_dst_balance})))
     |> Ecto.Multi.insert(:txn, Transaction.changeset(%Transaction{}, attrs))
     |> Repo.transaction()
-    # if (new_src_balance) <= 0 do
-    #   {:error, "Balance too low for transaction"}
-    # else
-    #   src_acc
-    #   |> Account.changeset(%{balance: new_src_balance})
-    #   |> Repo.update!()
-
-    #   dst_acc
-    #   |> Account.changeset(%{balance: new_dst_balance})
-    #   |> Repo.update!()
-
-    #   %Transaction{}
-    #   |> change_transaction(attrs)
-    #   |> Repo.insert()
-    # end
   end
 
+  @spec get_cust_acc(any, any) :: any
   def get_cust_acc(_conn, _params) do
     query = from c in Customer, join: a in Account, on: a.fname == c.name, select: {c.name, c.email, a.acn, a.balance}
     Repo.all(query)
   end
 
+  @spec get_transaction!(any) :: any
   def get_transaction!(id), do: Repo.get!(Transaction, id)
 
+  @spec get_all_customers(any, any) :: any
   def get_all_customers(_conn, _params) do
     Repo.all(Customer)
   end
 
+  @spec get_all_accounts(any, any) :: any
   def get_all_accounts(_conn, _params) do
     Repo.all(Account)
   end
 end
-
-
-
-
-# Enum.map(all, fn row ->
-#   rowl = Tuple.to_list(row)
-#   Enum.map(rowl, fn cell ->
-#     IO.inspect(cell)
-#   end)
-# end)

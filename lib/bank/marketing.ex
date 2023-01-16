@@ -11,12 +11,6 @@ defmodule Bank.Marketing do
 
   @doc """
   Returns the list of enrolments.
-
-  ## Examples
-
-      iex> list_enrolments()
-      [%Enrolment{}, ...]
-
   """
   def list_enrolments do
     Repo.all(Enrolment)
@@ -24,31 +18,11 @@ defmodule Bank.Marketing do
 
   @doc """
   Gets a single enrolment.
-
-  Raises `Ecto.NoResultsError` if the Enrolment does not exist.
-
-  ## Examples
-
-      iex> get_enrolment!(123)
-      %Enrolment{}
-
-      iex> get_enrolment!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_enrolment!(id), do: Repo.get!(Enrolment, id)
 
   @doc """
   Creates a enrolment.
-
-  ## Examples
-
-      iex> create_enrolment(%{field: value})
-      {:ok, %Enrolment{}}
-
-      iex> create_enrolment(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def create_enrolment(attrs \\ %{}) do
     %Enrolment{}
@@ -58,15 +32,6 @@ defmodule Bank.Marketing do
 
   @doc """
   Updates a enrolment.
-
-  ## Examples
-
-      iex> update_enrolment(enrolment, %{field: new_value})
-      {:ok, %Enrolment{}}
-
-      iex> update_enrolment(enrolment, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def update_enrolment(%Enrolment{} = enrolment, attrs) do
     enrolment
@@ -76,15 +41,6 @@ defmodule Bank.Marketing do
 
   @doc """
   Deletes a enrolment.
-
-  ## Examples
-
-      iex> delete_enrolment(enrolment)
-      {:ok, %Enrolment{}}
-
-      iex> delete_enrolment(enrolment)
-      {:error, %Ecto.Changeset{}}
-
   """
   def delete_enrolment(%Enrolment{} = enrolment) do
     Repo.delete(enrolment)
@@ -92,17 +48,12 @@ defmodule Bank.Marketing do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking enrolment changes.
-
-  ## Examples
-
-      iex> change_enrolment(enrolment)
-      %Ecto.Changeset{data: %Enrolment{}}
-
   """
   def change_enrolment(%Enrolment{} = enrolment, attrs \\ %{}) do
     Enrolment.changeset(enrolment, attrs)
   end
 
+  @spec list_leads :: any
   def list_leads do
     Repo.all(Lead)
   end
@@ -111,6 +62,8 @@ defmodule Bank.Marketing do
     Lead.changeset(lead, attrs)
   end
 
+  @spec create_lead(:invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}) ::
+          any
   def create_lead(attrs \\ %{}) do
     %Lead{}
     |> Lead.changeset(attrs)

@@ -12,15 +12,6 @@ defmodule Bank.Admin do
 
   @doc """
   Gets a employee by email.
-
-  ## Examples
-
-      iex> get_employee_by_email("foo@example.com")
-      %Employee{}
-
-      iex> get_employee_by_email("unknown@example.com")
-      nil
-
   """
   def get_employee_by_email(email) when is_binary(email) do
     Repo.get_by(Employee, email: email)
@@ -28,15 +19,6 @@ defmodule Bank.Admin do
 
   @doc """
   Gets a employee by email and password.
-
-  ## Examples
-
-      iex> get_employee_by_email_and_password("foo@example.com", "correct_password")
-      %Employee{}
-
-      iex> get_employee_by_email_and_password("foo@example.com", "invalid_password")
-      nil
-
   """
   def get_employee_by_email_and_password(email, password)
       when is_binary(email) and is_binary(password) do
@@ -48,15 +30,6 @@ defmodule Bank.Admin do
   Gets a single employee.
 
   Raises `Ecto.NoResultsError` if the Employee does not exist.
-
-  ## Examples
-
-      iex> get_employee!(123)
-      %Employee{}
-
-      iex> get_employee!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_employee!(id), do: Repo.get!(Employee, id)
 
@@ -64,15 +37,6 @@ defmodule Bank.Admin do
 
   @doc """
   Registers a employee.
-
-  ## Examples
-
-      iex> register_employee(%{field: value})
-      {:ok, %Employee{}}
-
-      iex> register_employee(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def register_employee(attrs) do
     %Employee{}
@@ -82,12 +46,6 @@ defmodule Bank.Admin do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking employee changes.
-
-  ## Examples
-
-      iex> change_employee_registration(employee)
-      %Ecto.Changeset{data: %Employee{}}
-
   """
   def change_employee_registration(%Employee{} = employee, attrs \\ %{}) do
     Employee.registration_changeset(employee, attrs, hash_password: false)
@@ -97,12 +55,6 @@ defmodule Bank.Admin do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the employee email.
-
-  ## Examples
-
-      iex> change_employee_email(employee)
-      %Ecto.Changeset{data: %Employee{}}
-
   """
   def change_employee_email(employee, attrs \\ %{}) do
     Employee.email_changeset(employee, attrs)
@@ -111,15 +63,6 @@ defmodule Bank.Admin do
   @doc """
   Emulates that the email will change without actually changing
   it in the database.
-
-  ## Examples
-
-      iex> apply_employee_email(employee, "valid password", %{email: ...})
-      {:ok, %Employee{}}
-
-      iex> apply_employee_email(employee, "invalid password", %{email: ...})
-      {:error, %Ecto.Changeset{}}
-
   """
   def apply_employee_email(employee, password, attrs) do
     employee
@@ -159,12 +102,6 @@ defmodule Bank.Admin do
 
   @doc """
   Delivers the update email instructions to the given employee.
-
-  ## Examples
-
-      iex> deliver_update_email_instructions(employee, current_email, &Routes.employee_update_email_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
   """
   def deliver_update_email_instructions(%Employee{} = employee, current_email, update_email_url_fun)
       when is_function(update_email_url_fun, 1) do
@@ -176,12 +113,6 @@ defmodule Bank.Admin do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the employee password.
-
-  ## Examples
-
-      iex> change_employee_password(employee)
-      %Ecto.Changeset{data: %Employee{}}
-
   """
   def change_employee_password(employee, attrs \\ %{}) do
     Employee.password_changeset(employee, attrs, hash_password: false)
@@ -189,15 +120,6 @@ defmodule Bank.Admin do
 
   @doc """
   Updates the employee password.
-
-  ## Examples
-
-      iex> update_employee_password(employee, "valid password", %{password: ...})
-      {:ok, %Employee{}}
-
-      iex> update_employee_password(employee, "invalid password", %{password: ...})
-      {:error, %Ecto.Changeset{}}
-
   """
   def update_employee_password(employee, password, attrs) do
     changeset =
@@ -246,15 +168,6 @@ defmodule Bank.Admin do
 
   @doc """
   Delivers the confirmation email instructions to the given employee.
-
-  ## Examples
-
-      iex> deliver_employee_confirmation_instructions(employee, &Routes.employee_confirmation_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
-      iex> deliver_employee_confirmation_instructions(confirmed_employee, &Routes.employee_confirmation_url(conn, :edit, &1))
-      {:error, :already_confirmed}
-
   """
   def deliver_employee_confirmation_instructions(%Employee{} = employee, confirmation_url_fun)
       when is_function(confirmation_url_fun, 1) do
@@ -293,12 +206,6 @@ defmodule Bank.Admin do
 
   @doc """
   Delivers the reset password email to the given employee.
-
-  ## Examples
-
-      iex> deliver_employee_reset_password_instructions(employee, &Routes.employee_reset_password_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
   """
   def deliver_employee_reset_password_instructions(%Employee{} = employee, reset_password_url_fun)
       when is_function(reset_password_url_fun, 1) do
@@ -309,15 +216,6 @@ defmodule Bank.Admin do
 
   @doc """
   Gets the employee by reset password token.
-
-  ## Examples
-
-      iex> get_employee_by_reset_password_token("validtoken")
-      %Employee{}
-
-      iex> get_employee_by_reset_password_token("invalidtoken")
-      nil
-
   """
   def get_employee_by_reset_password_token(token) do
     with {:ok, query} <- EmployeeToken.verify_email_token_query(token, "reset_password"),
@@ -330,15 +228,6 @@ defmodule Bank.Admin do
 
   @doc """
   Resets the employee password.
-
-  ## Examples
-
-      iex> reset_employee_password(employee, %{password: "new long password", password_confirmation: "new long password"})
-      {:ok, %Employee{}}
-
-      iex> reset_employee_password(employee, %{password: "valid", password_confirmation: "not the same"})
-      {:error, %Ecto.Changeset{}}
-
   """
   def reset_employee_password(employee, attrs) do
     Ecto.Multi.new()

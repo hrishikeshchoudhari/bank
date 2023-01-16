@@ -4,7 +4,7 @@
   <li><%= link "Settings", to: Routes.customer_settings_path(@conn, :edit) %></li>
   <li><%= link "Log out", to: Routes.customer_session_path(@conn, :delete), method: :delete %></li>
 <% else %>
-  <li><%= link "Register", to: Routes.customer_registration_path(@conn, :new) %></li>
-  <li><%= link "Log in", to: Routes.customer_session_path(@conn, :new) %></li>
+  <li><%= link "Customer Register", to: Routes.customer_registration_path(@conn, :new) %></li>
+  <li><%= link "Customer Log in", to: Routes.customer_session_path(@conn, :new) %></li>
 <% end %>
 </ul>

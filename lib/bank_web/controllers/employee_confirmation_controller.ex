@@ -28,8 +28,6 @@ defmodule BankWeb.EmployeeConfirmationController do
     render(conn, "edit.html", token: token)
   end
 
-  # Do not log in the employee after confirmation to avoid a
-  # leaked token giving the employee access to the account.
   def update(conn, %{"token" => token}) do
     case Admin.confirm_employee(token) do
       {:ok, _} ->
@@ -38,10 +36,7 @@ defmodule BankWeb.EmployeeConfirmationController do
         |> redirect(to: "/")
 
       :error ->
-        # If there is a current employee and the account was already confirmed,
-        # then odds are that the confirmation link was already visited, either
-        # by some automation or by the employee themselves, so we redirect without
-        # a warning message.
+
         case conn.assigns do
           %{current_employee: %{confirmed_at: confirmed_at}} when not is_nil(confirmed_at) ->
             redirect(conn, to: "/")

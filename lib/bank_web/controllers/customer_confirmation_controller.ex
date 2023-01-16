@@ -28,8 +28,6 @@ defmodule BankWeb.CustomerConfirmationController do
     render(conn, "edit.html", token: token)
   end
 
-  # Do not log in the customer after confirmation to avoid a
-  # leaked token giving the customer access to the account.
   def update(conn, %{"token" => token}) do
     case CoreBanking.confirm_customer(token) do
       {:ok, _} ->
@@ -38,10 +36,7 @@ defmodule BankWeb.CustomerConfirmationController do
         |> redirect(to: "/")
 
       :error ->
-        # If there is a current customer and the account was already confirmed,
-        # then odds are that the confirmation link was already visited, either
-        # by some automation or by the customer themselves, so we redirect without
-        # a warning message.
+
         case conn.assigns do
           %{current_customer: %{confirmed_at: confirmed_at}} when not is_nil(confirmed_at) ->
             redirect(conn, to: "/")

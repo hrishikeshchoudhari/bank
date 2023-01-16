@@ -29,8 +29,6 @@ defmodule BankWeb.CustomerResetPasswordController do
     render(conn, "edit.html", changeset: CoreBanking.change_customer_password(conn.assigns.customer))
   end
 
-  # Do not log in the customer after reset password to avoid a
-  # leaked token giving the customer access to the account.
   def update(conn, %{"customer" => customer_params}) do
     case CoreBanking.reset_customer_password(conn.assigns.customer, customer_params) do
       {:ok, _} ->

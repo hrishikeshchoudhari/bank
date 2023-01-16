@@ -52,16 +52,7 @@ defmodule BankWeb.CustomerAuth do
   # session to avoid fixation attacks. If there is any data
   # in the session you may want to preserve after log in/log out,
   # you must explicitly fetch the session data before clearing
-  # and then immediately set it after clearing, for example:
-  #
-  #     defp renew_session(conn) do
-  #       preferred_locale = get_session(conn, :preferred_locale)
-  #
-  #       conn
-  #       |> configure_session(renew: true)
-  #       |> clear_session()
-  #       |> put_session(:preferred_locale, preferred_locale)
-  #     end
+  # and then immediately set it after clearing
   #
   defp renew_session(conn) do
     conn
@@ -71,8 +62,6 @@ defmodule BankWeb.CustomerAuth do
 
   @doc """
   Logs the customer out.
-
-  It clears all session data for safety. See renew_session.
   """
   def log_out_customer(conn) do
     customer_token = get_session(conn, :customer_token)
@@ -128,9 +117,6 @@ defmodule BankWeb.CustomerAuth do
 
   @doc """
   Used for routes that require the customer to be authenticated.
-
-  If you want to enforce the customer email is confirmed before
-  they use the application at all, here would be a good place.
   """
   def require_authenticated_customer(conn, _opts) do
     if conn.assigns[:current_customer] do
@@ -151,11 +137,7 @@ defmodule BankWeb.CustomerAuth do
   defp maybe_store_return_to(conn), do: conn
 
   defp signed_in_path(conn) do
-
-    IO.inspect(conn.assigns.name)
     acc = CoreBanking.get_acc_by_name(conn.assigns.name)
-    IO.inspect(acc.acn)
-    # redirect(conn, to: Routes.account_path(conn, :accounthome, "me3@rishi.xyz"))
     "/account/home"
   end
 end
