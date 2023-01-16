@@ -7,6 +7,7 @@ defmodule Bank.CoreBanking.Transaction do
     field :dst_acn, :string
     field :src_acn, :string
     field :txn_mode, :string
+    belongs_to :account, Account
 
     timestamps()
   end

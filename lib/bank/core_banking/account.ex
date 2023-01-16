@@ -7,6 +7,8 @@ defmodule Bank.CoreBanking.Account do
     field :balance, :integer
     field :fname, :string
     field :email, :string
+    belongs_to :customer, Customer
+    has_many :transactions, Transaction
 
     timestamps()
   end

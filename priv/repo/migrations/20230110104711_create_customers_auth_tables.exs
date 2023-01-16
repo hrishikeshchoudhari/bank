@@ -5,9 +5,11 @@ defmodule Bank.Repo.Migrations.CreateCustomersAuthTables do
     execute "CREATE EXTENSION IF NOT EXISTS citext", ""
 
     create table(:customers) do
+      add :name, :string
       add :email, :citext, null: false
       add :hashed_password, :string, null: false
       add :confirmed_at, :naive_datetime
+      add :account, references(:account, on_delete: :nothing)
       timestamps()
     end
 

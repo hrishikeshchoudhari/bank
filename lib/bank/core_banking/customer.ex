@@ -8,6 +8,7 @@ defmodule Bank.CoreBanking.Customer do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :name, :string
+    has_one :account, Account
 
     timestamps()
   end

@@ -7,6 +7,8 @@ defmodule Bank.Repo.Migrations.CreateAccounts do
       add :fname, :string
       add :balance, :integer
       add :secret, :string
+      add :customer, references(:customers, on_delete: :nothing)
+      add :transaction, references(:transactions, on_delete: :nothing)
 
       timestamps()
     end

@@ -7,6 +7,7 @@ defmodule Bank.Repo.Migrations.CreateTransactions do
       add :dst_acn, :string
       add :txn_mode, :string
       add :amount, :integer
+      add :account, references(:accounts, on_delete: :nothing)
 
       timestamps()
     end
